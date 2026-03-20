@@ -64,85 +64,16 @@ npm run start
 
 ---
 
-# 🐳 Docker Compose Installation
+# 🐳 Docker Installation
 
-### 1️⃣ Create `.env`
 
-```env
-POSTGRES_PASSWORD=mysecretpassword
-DATABASE_URL="postgresql://postgres:mysecretpassword@postgres:5432/postgres"
-```
+- Install docker
+- Start postgres
+    - Docker run -e POSTGRES_PASSWORD=mysecretpassword -d -p 5432:5432 postgres
+- Build the image - `docker build -t user-project`
+- Start the image - `docker run -p 3000:3000 user-project`
 
----
+# Docker Compose Installation
 
-### 2️⃣ Create `docker-compose.yml`
-
-```yaml
-version: '3.8'
-
-services:
-  postgres:
-    image: postgres
-    container_name: postgres_db
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  backend:
-    build: .
-    container_name: backend_app
-    depends_on:
-      - postgres
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-
-volumes:
-  pgdata:
-```
-
----
-
-### 3️⃣ Start the Application
-
-```bash
-docker-compose up --build
-```
-
----
-
-### 4️⃣ Run Prisma (if needed)
-
-```bash
-npx prisma migrate dev
-npx prisma generate
-```
-
----
-
-# 🌐 Access
-
-* Backend → http://localhost:3000
-* PostgreSQL → localhost:5432
-
----
-
-# 🧠 Notes
-
-* Use `postgres` as hostname inside Docker
-* Do NOT use `localhost` inside containers
-* `.env` file should NOT be pushed to GitHub
-
----
-
-# ⚡ Summary
-
-* Manual setup → local DB + backend
-* Docker Compose → full containerized setup
-* Prisma → handles DB schema & queries
-
----
+- Install docker, dockert-compose
+- Run `docker-compose up`
